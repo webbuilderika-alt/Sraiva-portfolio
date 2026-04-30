@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Montserrat", sans-serif;
+  --color-sraiva-navy: #0D1B2A;
+  --color-sraiva-green: #38B000;
+  --color-sraiva-slate: #F1F5F9;
+}
+
+@layer base {
+  body {
+    @apply bg-sraiva-slate text-sraiva-navy font-sans antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-serif;
+  }
+}
+
+.minimal-input {
+  @apply bg-transparent border-0 border-b border-sraiva-navy/20 py-4 focus:ring-0 focus:border-sraiva-green hover:border-sraiva-green transition-all duration-500 outline-none w-full placeholder:text-sraiva-navy/30;
+}
+
+.minimal-input:hover {
+  border-bottom-width: 2px;
+}
+
+.glass-card {
+  @apply bg-white/40 backdrop-blur-sm border border-sraiva-navy/10 shadow-sm transition-all duration-700;
+}
+
+.brochure-card {
+  @apply border border-sraiva-navy/10 p-12 bg-white/50 backdrop-blur-sm hover:border-sraiva-green/40 transition-all duration-700 relative overflow-hidden;
+}
+
+.brochure-card::before {
+  content: '';
+  @apply absolute top-0 left-0 w-1 h-0 bg-sraiva-green transition-all duration-700;
+}
+
+.brochure-card:hover::before {
+  @apply h-full;
+}
