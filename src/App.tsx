@@ -308,6 +308,7 @@ function HomePage() {
             <form 
               name="contact" 
               method="POST" 
+              action="/thank-you"
               data-netlify="true" 
               data-netlify-honeypot="bot-field"
               className="space-y-16"
@@ -405,6 +406,50 @@ function HomePage() {
   );
 }
 
+function ThankYouPage() {
+  return (
+    <motion.div 
+      variants={pageVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      className="min-h-screen bg-sraiva-navy text-white flex items-center justify-center px-6"
+    >
+      <div className="max-w-2xl text-center space-y-12">
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", damping: 12, stiffness: 200 }}
+          className="w-24 h-24 bg-sraiva-green rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-sraiva-green/20"
+        >
+          <Send className="w-10 h-10 text-white" />
+        </motion.div>
+
+        <div className="space-y-6">
+          <h1 className="text-5xl md:text-7xl tracking-tighter italic">Thank you!</h1>
+          <p className="text-xl md:text-2xl text-white/60 font-light leading-relaxed">
+            Your message has been successfully captured. We'll reach out shortly to discuss your digital legancy.
+          </p>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+        >
+          <Link 
+            to="/" 
+            className="inline-flex items-center gap-3 bg-white text-sraiva-navy px-10 py-4 rounded-full font-bold hover:bg-sraiva-green hover:text-white transition-all active:scale-95 group"
+          >
+            Return Home
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -412,6 +457,7 @@ export default function App() {
       <AnimatePresence mode="wait">
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/thank-you" element={<ThankYouPage />} />
         </Routes>
       </AnimatePresence>
     </BrowserRouter>
