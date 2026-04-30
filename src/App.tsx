@@ -84,9 +84,8 @@ function WhatsAppButton() {
 
 function HomePage() {
   const { scrollY } = useScroll();
-  const yHero = useTransform(scrollY, [0, 500], [0, 150]);
-  const ySubHero = useTransform(scrollY, [0, 500], [0, 100]);
-  const opacityHero = useTransform(scrollY, [0, 300], [1, 0]);
+  const yHero = useTransform(scrollY, [0, 1000], [0, 100]);
+  const opacityHero = useTransform(scrollY, [300, 800], [1, 0]);
 
   return (
     <motion.div 
@@ -94,7 +93,7 @@ function HomePage() {
       initial="initial"
       animate="animate"
       exit="exit"
-      className="min-h-screen selection:bg-sraiva-green selection:text-white overflow-x-hidden"
+      className="min-h-screen selection:bg-sraiva-green selection:text-white overflow-x-hidden bg-white"
     >
       {/* Sticky Header */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-sraiva-slate/80 backdrop-blur-md border-b border-sraiva-navy/5">
@@ -118,8 +117,13 @@ function HomePage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-40 pb-24 px-6 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto relative z-10">
+      <section className="min-h-screen pt-40 pb-24 px-6 relative flex items-center">
+        {/* Background Patterns */}
+        <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none">
+          <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(#1A1D23 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10 w-full">
           <motion.div 
             style={{ y: yHero, opacity: opacityHero }}
             initial={{ opacity: 0, scale: 0.98 }}
@@ -127,41 +131,37 @@ function HomePage() {
             transition={{ duration: 1.2, ease: "easeOut" }}
             className="flex flex-col items-center text-center space-y-10"
           >
-            <div className="flex items-center gap-2 px-5 py-1.5 rounded-full border border-sraiva-navy/10 bg-white/50 text-sraiva-navy/60 text-[10px] font-bold uppercase tracking-widest">
+            <div className="flex items-center gap-2 px-5 py-2 rounded-full border border-sraiva-navy/10 bg-white/50 text-sraiva-navy/60 text-[10px] font-bold uppercase tracking-[0.3em] mb-4">
               <MapPin className="w-3.5 h-3.5 text-sraiva-green" />
-              Based in Hyderabad
+              Empowering Hyderabad's Elite
             </div>
             
-            <h1 className="text-7xl md:text-9xl leading-tight max-w-5xl tracking-tighter">
-              Digital <span className="italic text-sraiva-navy/60">Showcases</span> for Hyderabad’s Finest
+            <h1 className="text-6xl md:text-8xl lg:text-9xl leading-[1.1] max-w-6xl tracking-tighter relative z-0 mb-12">
+              Digital <span className="italic text-sraiva-navy/40">Showcases</span> <br className="hidden md:block" /> for Hyderabad’s Finest Brands
             </h1>
             
-            <motion.p 
-              style={{ y: ySubHero }}
-              className="text-xl md:text-2xl text-sraiva-navy/70 max-w-3xl leading-relaxed font-light mb-4"
-            >
-              We design, build, and host elegant websites that mirror the quality of your work. 
-              From the first sketch to a live link, we handle everything.
-            </motion.p>
-            
-            <motion.div 
-              style={{ y: ySubHero }}
-              className="flex flex-col sm:flex-row gap-6 pt-4"
-            >
-              <a 
-                href="#inquiry"
-                className="bg-sraiva-navy text-white px-10 py-4 rounded-full font-bold hover:shadow-2xl hover:shadow-sraiva-navy/20 transition-all active:scale-95 flex items-center gap-2 group"
-              >
-                Start a Conversation
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform text-sraiva-green" />
-              </a>
-              <a 
-                href="#standard"
-                className="bg-white text-sraiva-navy border border-sraiva-navy/10 px-10 py-4 rounded-full font-bold hover:bg-sraiva-navy hover:text-white transition-all active:scale-95"
-              >
-                Learn More
-              </a>
-            </motion.div>
+            <div className="relative z-10 flex flex-col items-center">
+              <p className="text-xl md:text-2xl text-sraiva-navy/70 max-w-2xl leading-relaxed font-light mb-12">
+                We design, build, and host elegant websites that mirror the quality of your work. 
+                From discovery to deployment, we handle the entire digital journey.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-6">
+                <a 
+                  href="#inquiry"
+                  className="bg-sraiva-navy text-white px-10 py-5 rounded-full font-bold hover:shadow-2xl hover:shadow-sraiva-navy/30 transition-all active:scale-95 flex items-center justify-center gap-3 group"
+                >
+                  Start a Conversation
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform text-sraiva-green" />
+                </a>
+                <a 
+                  href="#standard"
+                  className="bg-white text-sraiva-navy border border-sraiva-navy/10 px-10 py-5 rounded-full font-bold hover:bg-sraiva-navy hover:text-white transition-all active:scale-95 flex items-center justify-center"
+                >
+                  Learn More
+                </a>
+              </div>
+            </div>
             
             <motion.div 
               initial={{ opacity: 0 }}
@@ -309,24 +309,30 @@ function HomePage() {
               name="contact" 
               method="POST" 
               data-netlify="true" 
+              data-netlify-honeypot="bot-field"
               className="space-y-16"
             >
               <input type="hidden" name="form-name" value="contact" />
+              <p className="hidden">
+                <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
+              </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
                 <div className="relative group">
-                  <label className="block text-[10px] font-bold uppercase tracking-[0.3em] text-sraiva-green mb-3">Full Name</label>
+                  <label htmlFor="full_name" className="block text-[10px] font-bold uppercase tracking-[0.3em] text-sraiva-green mb-3">Full Name</label>
                   <input 
+                    id="full_name"
                     type="text" 
-                    name="full_name"
+                    name="name"
                     placeholder="E.g. Arjun Reddy"
                     className="minimal-input !text-white !border-white/20 focus:!border-sraiva-green"
                     required
                   />
                 </div>
                 <div className="relative group">
-                  <label className="block text-[10px] font-bold uppercase tracking-[0.3em] text-sraiva-green mb-3">Email Address</label>
+                  <label htmlFor="email" className="block text-[10px] font-bold uppercase tracking-[0.3em] text-sraiva-green mb-3">Email Address</label>
                   <input 
+                    id="email"
                     type="email" 
                     name="email"
                     placeholder="arjun@studio.com"
@@ -338,8 +344,9 @@ function HomePage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
                 <div className="relative group">
-                  <label className="block text-[10px] font-bold uppercase tracking-[0.3em] text-sraiva-green mb-3">Business Type</label>
+                  <label htmlFor="business_type" className="block text-[10px] font-bold uppercase tracking-[0.3em] text-sraiva-green mb-3">Business Type</label>
                   <input 
+                    id="business_type"
                     type="text" 
                     name="business_type"
                     placeholder="E.g. Interior Design"
@@ -348,9 +355,10 @@ function HomePage() {
                   />
                 </div>
                 <div className="relative group">
-                  <label className="block text-[10px] font-bold uppercase tracking-[0.3em] text-sraiva-green mb-3">Your Vision</label>
+                  <label htmlFor="vision" className="block text-[10px] font-bold uppercase tracking-[0.3em] text-sraiva-green mb-3">Your Vision</label>
                   <textarea 
-                    name="vision"
+                    id="vision"
+                    name="message"
                     placeholder="Tell us about your masterpiece"
                     rows={1}
                     className="minimal-input !text-white !border-white/20 focus:!border-sraiva-green resize-none overflow-hidden"
